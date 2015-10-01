@@ -5,8 +5,8 @@
 package main
 
 import (
-	"github.com/cgilmour/maxopen"
 	"fmt"
+	"github.com/cgilmour/maxopen"
 )
 
 func main() {
@@ -23,4 +23,3 @@ func main() {
 		fmt.Println("error occurred:", maxopen.Err())
 	}
 }
-
