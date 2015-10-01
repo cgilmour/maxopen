@@ -1,6 +1,6 @@
 // Copyright 2015 Caleb Gilmour
 // Use of this source code free and unencumbered software released into the public domain.
-// For more information, refer to the UNLICENSE file or <http://unlicense.org/>
+// For more information, refer to the LICENSE file or <http://unlicense.org/>
 
 package main
 
