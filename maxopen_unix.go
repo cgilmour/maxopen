@@ -17,12 +17,27 @@ var (
 	maximum uint64
 	err     error
 	mu      sync.Mutex
+	rlimits rlimitCalls = syscallRlimits{}
 )
+
+type rlimitCalls interface {
+	Getrlimit(int,*syscall.Rlimit) error
+	Setrlimit(int,*syscall.Rlimit) error
+}
+
+type syscallRlimits struct{}
+func (syscallRlimits) Getrlimit(resource int, rlim *syscall.Rlimit) error {
+	return syscall.Getrlimit(resource,rlim)
+}
+
+func (syscallRlimits) Setrlimit(resource int, rlim *syscall.Rlimit) error {
+	return syscall.Setrlimit(resource,rlim)
+}
 
 func init() {
 	// get current value
 	r := syscall.Rlimit{}
-	err = syscall.Getrlimit(syscall.RLIMIT_NOFILE, &r)
+	err = rlimits.Getrlimit(syscall.RLIMIT_NOFILE, &r)
 	if err != nil {
 		return
 	}
@@ -75,11 +90,11 @@ func Reset() {
 
 func set(n uint64) (uint64, error) {
 	r := syscall.Rlimit{Cur: n, Max: maximum}
-	e := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &r)
+	e := rlimits.Setrlimit(syscall.RLIMIT_NOFILE, &r)
 	if e != nil {
 		return current, e
 	}
-	e = syscall.Getrlimit(syscall.RLIMIT_NOFILE, &r)
+	e = rlimits.Getrlimit(syscall.RLIMIT_NOFILE, &r)
 	if e != nil {
 		return current, e
 	}
