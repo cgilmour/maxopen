@@ -1,3 +1,4 @@
+[![Build Status](https://drone.io/github.com/cgilmour/maxopen/status.png)](https://drone.io/github.com/cgilmour/maxopen/latest)
 # maxopen
 Automatically increase the Max Open Files limit for your go process.
 
