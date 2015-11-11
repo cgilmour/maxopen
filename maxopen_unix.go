@@ -81,7 +81,7 @@ func Set(n uint64) {
 	current, err = set(n)
 }
 
-// Set attempts to change the current limit to the specified value.
+// Reset attempts to change the current limit back to the original value at startup.
 func Reset() {
 	mu.Lock()
 	defer mu.Unlock()

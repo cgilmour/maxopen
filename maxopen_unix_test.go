@@ -77,16 +77,16 @@ func (setrlimitError) Setrlimit(resource int, rlim *syscall.Rlimit) error {
 }
 
 func TestErrors(t *testing.T) {
-	saved_err := Err()
-	saved_current := Current()
-	saved_rlimits := rlimits
+	savedErr := Err()
+	savedCurrent := Current()
+	savedRlimits := rlimits
 	err = nil
 	rlimits = getrlimitError{}
 	Reset()
 	if Err() == nil {
 		t.Fatal("expected forced error")
 	}
-	if saved_current != Current() {
+	if savedCurrent != Current() {
 		t.Fatal("expected current to be unchanged")
 	}
 	err = nil
@@ -95,9 +95,9 @@ func TestErrors(t *testing.T) {
 	if Err() == nil {
 		t.Fatalf("expected forced error")
 	}
-	if saved_current != Current() {
+	if savedCurrent != Current() {
 		t.Fatal("expected current to be unchanged")
 	}
-	err = saved_err
-	rlimits = saved_rlimits
+	err = savedErr
+	rlimits = savedRlimits
 }
