@@ -21,17 +21,18 @@ var (
 )
 
 type rlimitCalls interface {
-	Getrlimit(int,*syscall.Rlimit) error
-	Setrlimit(int,*syscall.Rlimit) error
+	Getrlimit(int, *syscall.Rlimit) error
+	Setrlimit(int, *syscall.Rlimit) error
 }
 
 type syscallRlimits struct{}
+
 func (syscallRlimits) Getrlimit(resource int, rlim *syscall.Rlimit) error {
-	return syscall.Getrlimit(resource,rlim)
+	return syscall.Getrlimit(resource, rlim)
 }
 
 func (syscallRlimits) Setrlimit(resource int, rlim *syscall.Rlimit) error {
-	return syscall.Setrlimit(resource,rlim)
+	return syscall.Setrlimit(resource, rlim)
 }
 
 func init() {
@@ -53,7 +54,7 @@ func init() {
 
 }
 
-// Err returns any error that occured while updating the resource limit.
+// Err returns any error that occurred while updating the resource limit.
 func Err() error {
 	mu.Lock()
 	defer mu.Unlock()

@@ -7,9 +7,9 @@
 package maxopen
 
 import (
-	"testing"
-	"syscall"
 	"errors"
+	"syscall"
+	"testing"
 )
 
 func TestInitSucceeded(t *testing.T) {
@@ -59,17 +59,19 @@ func TestReset(t *testing.T) {
 }
 
 type getrlimitError struct{}
+
 func (getrlimitError) Getrlimit(resource int, rlim *syscall.Rlimit) error {
 	return errors.New("Forced error for testing purposes")
 }
 
 func (getrlimitError) Setrlimit(resource int, rlim *syscall.Rlimit) error {
-	return syscall.Setrlimit(resource,rlim)
+	return syscall.Setrlimit(resource, rlim)
 }
 
 type setrlimitError struct{}
+
 func (setrlimitError) Getrlimit(resource int, rlim *syscall.Rlimit) error {
-	return syscall.Getrlimit(resource,rlim)
+	return syscall.Getrlimit(resource, rlim)
 }
 
 func (setrlimitError) Setrlimit(resource int, rlim *syscall.Rlimit) error {
